@@ -1,0 +1,191 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>For TWISHUU — Happy Birthday</title>
+<style>
+  :root{ --bg:#0f0f12; --muted:#d6cdd6; --accent:#ff6ea6; --card:#0b0b0d; }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:linear-gradient(180deg,#0b0810,#0f0f12); color:#fff;}
+  header{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;position:sticky;top:0;background:linear-gradient(180deg, rgba(11,8,13,0.6), rgba(15,15,18,0.4));backdrop-filter:blur(6px);z-index:60}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,#ffb3d1,#ff6ea6);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+  nav{display:flex;gap:8px}
+  nav button{background:transparent;border:0;color:var(--muted);padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600}
+  nav button.active{background:linear-gradient(90deg, rgba(255,110,166,0.12), rgba(255,154,179,0.08));color:#fff;}
+  main{padding:28px;max-width:1100px;margin:0 auto;min-height:calc(100vh - 84px)}
+  .hero{display:flex;gap:18px;align-items:center;margin-bottom:18px}
+  .title{font-size:clamp(22px,3.4vw,36px);margin:0;font-weight:700}
+  .subtitle{color:var(--muted);font-size:14px}
+  .controls{display:flex;gap:10px;align-items:center}
+  .btn{background:linear-gradient(90deg,#ffb3d1,#ff6ea6);border:0;padding:10px 16px;border-radius:999px;color:#111;cursor:pointer}
+
+  section{display:none}
+  section.show{display:block}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px}
+  .post{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06));border-radius:16px;overflow:hidden;cursor:pointer}
+  .post img{width:100%;height:260px;object-fit:cover;display:block}
+  .meta{padding:12px 14px;display:flex;align-items:center;gap:12px}
+  .avatar{width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#ffd7e6,#ff9acb);display:flex;align-items:center;justify-content:center;color:#111;font-weight:700}
+  .cap{font-size:14px;color:var(--muted);flex:1}
+
+  .letter{background:linear-gradient(180deg,#fffaf6,#fff5fb);color:#2b1b20;padding:36px;border-radius:18px;line-height:1.8;font-size:18px;box-shadow:0 18px 60px rgba(0,0,0,0.35)}
+  .letter h2{margin-top:0;  font-family: 'Farmhouse';
+  src: url('assets/fonts/Farmhouse.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+  .gift-note{margin-top:16px;padding:14px;background:linear-gradient(90deg,#ffeff6,#fff);border-radius:12px;color:#4a2a32;font-size:15px;border:1px dashed rgba(255,110,166,0.12)}
+
+  .scrap{position:relative;min-height:520px;background:linear-gradient(180deg,#fbf7f9,#fff);padding:32px;border-radius:16px;color:#222}
+  .polaroid{width:180px;padding:12px;background:#fff;border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,0.15);text-align:center;cursor:grab;position:absolute;user-select:none;transition:transform .12s}
+  .polaroid img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+  .polaroid .tag{font-size:13px;margin-top:8px;color:#333;font-weight:700}
+  .tape{position:absolute;top:-10px;left:30%;width:46px;height:18px;background:linear-gradient(90deg,#fff1f6,#ffd7e6);transform:rotate(-6deg);border-radius:4px}
+
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.92);display:none;align-items:center;justify-content:center;z-index:200;padding:20px}
+  .lightbox.show{display:flex}
+  .lightbox img{max-width:92%;max-height:86%;border-radius:12px}
+
+  footer{padding:18px;text-align:center;color:rgba(255,255,255,0.45);font-size:13px}
+
+  #splash{position:fixed; inset:0; z-index:9999; display:flex; align-items:center; justify-content:center; background: radial-gradient(ellipse at center, rgba(20,12,20,0.95), rgba(5,5,7,0.98)); color:#fff; overflow:hidden;}
+  .handwritten{font-family: "Allura", "Great Vibes", "Dancing Script", cursive; font-size:clamp(36px,8vw,86px); color:#ffe8f2; text-shadow:0 10px 30px rgba(255,110,166,0.45);}
+  .subtitle-splash{margin-top:10px;color:rgba(255,255,255,0.85); font-size:16px}
+  #enterBtn{margin-top:20px;padding:10px 18px;border-radius:999px;border:0;cursor:pointer;background:linear-gradient(90deg,#ffb3d1,#ff6ea6);color:#111}
+  #heartCanvas{position:fixed; inset:0; pointer-events:none; z-index:9000;}
+
+  @media (max-width:720px){ .post img{height:180px} .polaroid{width:140px} .polaroid img{height:110px} main{padding:18px} }
+</style>
+</head>
+<body>
+
+<canvas id="heartCanvas"></canvas>
+<div id="splash" class="show" aria-hidden="false">
+  <div class="center" role="dialog" aria-modal="true" style="text-align:center">
+    <div class="handwritten">Happy Birthday TWISHUU</div>
+    <div class="subtitle-splash">You are my compass, my home, my always.</div>
+    <button id="enterBtn" aria-label="Enter site">Enter</button>
+  </div>
+</div>
+
+<header>
+  <div class="brand"><div class="logo">❤</div><div><strong>For TWISHUU</strong><div style="font-size:12px;color:var(--muted)">A heartfelt birthday site</div></div></div>
+  <nav id="nav">
+    <button data-section="feed" class="active">Feed</button>
+    <button data-section="letter">Love Letter</button>
+    <button data-section="scrapbook">Scrapbook</button>
+  </nav>
+</header>
+
+<main>
+  <div class="hero">
+    <div>
+      <h1 class="title">Happy Birthday TWISHUU — my everything</h1>
+      <div class="subtitle">A small site to say: thank you for being you. Tap photos to enlarge • Click Play to listen</div>
+    </div>
+    <div style="margin-left:auto" class="controls">
+      <button class="btn" id="playBtn">Play "Tere Pyaar Mein"</button>
+      <button class="btn" id="pauseBtn" style="display:none">Pause</button>
+    </div>
+  </div>
+
+  <!-- Feed -->
+  <section id="feed" class="show">
+    <div class="grid" id="feedGrid"></div>
+  </section>
+
+  
+<!-- Love Letter -->
+<section id="letter">
+  <div class="letter">
+    <h2>My dearest Twisha,</h2>
+
+    <p>Happy Birthday, my love.<br>
+    Aaj ka din sirf tumhara hai — aur iss duniya ko tumhare jaise pyaare, soft, aur beautiful soul ka celebration har saal milna chahiye.</p>
+
+    <p>Twisha… you have no idea how much warmth you bring into my life. Tumhari smile mere din ko bright bana deti hai, tumhari baatein mere dil ko shanti deti hain, aur tumhari presence hi mere liye sabse bada gift hai.</p>
+
+    <p>I love the way you care, the way you understand, the way you make even the simplest moments feel special. Your heart is the most beautiful place I know.</p>
+
+    <p>On your special day, I just want to thank you —<br>
+    for being you,<br>
+    for choosing me,<br>
+    for staying,<br>
+    for loving,<br>
+    and for making my world feel like home.</p>
+
+    <p>I promise to always support you, protect you, respect you, and love you with all I have.</p>
+
+    <p>Happy Birthday, my Twishu.<br>
+    You deserve all the love, all the happiness, and every beautiful thing in this world.</p>
+
+    <p style="margin-top:18px"><strong>With all my love,<br>
+    Adeesh 💞✨</strong></p>
+
+    <div class="gift-note">P.S. Double-click any photo in the Scrapbook to open a special memory.</div>
+  </div>
+</section>
+
+
+  <!-- Scrapbook -->
+  <section id="scrapbook">
+    <div class="scrap" id="scrapArea" style="position:relative;overflow:hidden"></div>
+  </section>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-hidden="true"><img id="lightboxImg" src="" alt="enlarged"></div>
+
+</main>
+
+<audio id="bgAudio" src="assets/tere_pyaar_mein.mp3" loop preload="auto"></audio>
+<footer>Made with ♥ — replace photos in /assets and deploy via GitHub Pages</footer>
+
+<script>
+// photos array with 7 items
+const photos = [
+  {src:'assets/photo1.jpg', caption:'Your smile that warms me'},
+  {src:'assets/photo2.jpg', caption:'unforgettable moment'},
+  {src:'assets/photo3.jpg', caption:'Laughter and joy '},
+  {src:'assets/photo4.jpg', caption:'Laughter and silly night'},
+  {src:'assets/photo5.jpg', caption:' Hum do ek dil💗'},
+  {src:'assets/photo6.jpg', caption:'The late-night with you💗'},
+  {src:'assets/photo7.jpg', caption:'Wo shaam jo tere sath ho'}
+];
+
+// navigation
+const nav = document.getElementById('nav');
+nav.addEventListener('click', (e)=>{ if(e.target.matches('button')){ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active')); e.target.classList.add('active'); const sec = e.target.dataset.section; document.querySelectorAll('main section').forEach(s=> s.id===sec ? s.classList.add('show') : s.classList.remove('show')); window.scrollTo({top:0, behavior:'smooth'}); } });
+
+// populate feed
+const feedGrid = document.getElementById('feedGrid');
+photos.forEach((p)=>{ const post = document.createElement('div'); post.className='post'; post.innerHTML = `<img src="${p.src}" alt=""><div class="meta"><div class="avatar">❤</div><div class="cap">${p.caption}</div></div>`; post.addEventListener('click', ()=> openLightbox(p.src)); feedGrid.appendChild(post); });
+
+// scrapbook layout
+const scrapArea = document.getElementById('scrapArea');
+function layoutPolaroids(){ scrapArea.innerHTML=''; const areaW = Math.max(760, scrapArea.clientWidth || 760); const n = photos.length; const cols = Math.ceil(Math.sqrt(n)); const margin=30; const usableW = Math.max(480, areaW - margin*2); const spacingX = Math.floor(usableW / Math.max(1, cols)); const spacingY = 140; photos.forEach((p, idx)=>{ const pol = document.createElement('div'); pol.className='polaroid'; const col = idx % cols; const row = Math.floor(idx/cols); const jitterX = (Math.random()*40)-20; const jitterY=(Math.random()*36)-18; const left = margin + col*spacingX + jitterX; const top = margin + row*spacingY + jitterY; const rot = (Math.random()>0.5)?(-4+Math.random()*2):(4-Math.random()*2); pol.style.left = Math.max(8,left) + 'px'; pol.style.top = Math.max(8,top) + 'px'; pol.style.transform = `rotate(${rot}deg)`; pol.innerHTML = `<div class="tape"></div><img src="${p.src}" alt=""><div class="tag">${p.caption}</div>`; scrapArea.appendChild(pol); pol.addEventListener('pointerdown', function(ev){ pol.setPointerCapture(ev.pointerId); const startX=ev.clientX, startY=ev.clientY; const origLeft = parseInt(pol.style.left||0), origTop = parseInt(pol.style.top||0); function onMove(e){ pol.style.left = (origLeft + e.clientX - startX) + 'px'; pol.style.top = (origTop + e.clientY - startY) + 'px'; pol.style.transform='rotate(0deg)'; pol.style.zIndex=1000; } function onUp(e){ pol.releasePointerCapture(ev.pointerId); window.removeEventListener('pointermove', onMove); window.removeEventListener('pointerup', onUp); pol.style.zIndex=''; setTimeout(()=>{ const r = (Math.random()>0.5)?-4:4; pol.style.transform = 'rotate(' + r + 'deg)'; },300); } window.addEventListener('pointermove', onMove); window.addEventListener('pointerup', onUp); }); pol.addEventListener('dblclick', ()=> openLightbox(p.src)); }); }
+layoutPolaroids(); let _layoutTimer=null; window.addEventListener('resize', ()=>{ clearTimeout(_layoutTimer); _layoutTimer=setTimeout(layoutPolaroids,140); });
+
+// lightbox
+const lightbox = document.getElementById('lightbox'); const lightboxImg = document.getElementById('lightboxImg');
+function openLightbox(src){ lightboxImg.src = src; lightbox.classList.add('show'); lightbox.setAttribute('aria-hidden','false'); }
+lightbox.addEventListener('click', ()=>{ lightbox.classList.remove('show'); lightbox.setAttribute('aria-hidden','true'); });
+
+// audio controls & autoplay fallback
+const playBtn = document.getElementById('playBtn'); const pauseBtn = document.getElementById('pauseBtn'); const audioEl = document.getElementById('bgAudio'); const YOUTUBE_URL='https://www.youtube.com/watch?v=Dk5ea8uzJjI';
+async function tryAutoplay(){ if(audioEl && audioEl.src){ try{ await audioEl.play(); playBtn.style.display='none'; pauseBtn.style.display='inline-block'; }catch(e){} } } tryAutoplay();
+function userGesturePlay(){ if(audioEl && audioEl.src){ audioEl.play().then(()=>{ playBtn.style.display='none'; pauseBtn.style.display='inline-block'; }).catch(()=>{}); } window.removeEventListener('click', userGesturePlay); window.removeEventListener('touchstart', userGesturePlay); }
+window.addEventListener('click', userGesturePlay); window.addEventListener('touchstart', userGesturePlay);
+playBtn.addEventListener('click', ()=>{ if(audioEl && audioEl.src){ audioEl.play(); playBtn.style.display='none'; pauseBtn.style.display='inline-block'; } else { window.open(YOUTUBE_URL,'_blank'); } });
+pauseBtn.addEventListener('click', ()=>{ if(audioEl && audioEl.src){ audioEl.pause(); pauseBtn.style.display='none'; playBtn.style.display='inline-block'; } });
+
+// splash enter & particle script
+(function(){ const splash=document.getElementById('splash'); const enter=document.getElementById('enterBtn'); const audio=document.getElementById('bgAudio'); enter.addEventListener('click', ()=>{ if(audio && audio.src) audio.play().catch(()=>{}); splash.classList.remove('show'); splash.setAttribute('aria-hidden','true'); document.body.classList.remove('splash-open'); setTimeout(()=>{ if(splash && splash.parentNode) splash.parentNode.removeChild(splash); },900); }); document.body.classList.add('splash-open'); enter.focus(); })();
+
+// heart particle canvas
+(function(){ const canvas=document.getElementById('heartCanvas'); const ctx=canvas.getContext('2d'); let w,h; function resize(){ w=canvas.width=window.innerWidth; h=canvas.height=window.innerHeight; } window.addEventListener('resize', resize); resize(); const hearts=[]; function createHeart(){ hearts.push({ x: Math.random()*w, y: h + 20, size: 14 + Math.random()*18, speed: 1 + Math.random()*2, opacity: 0.4 + Math.random()*0.5 }); } for(let i=0;i<18;i++) createHeart(); function drawHeart(x,y,size,alpha){ ctx.save(); ctx.globalAlpha=alpha; ctx.fillStyle='#ff7aa9'; ctx.beginPath(); const topCurveHeight = size*0.3; ctx.moveTo(x, y + topCurveHeight); ctx.bezierCurveTo(x, y, x - size/2, y, x - size/2, y + topCurveHeight); ctx.bezierCurveTo(x - size/2, y + (size+topCurveHeight)/2, x, y + (size+topCurveHeight)/2, x, y + size); ctx.bezierCurveTo(x, y + (size+topCurveHeight)/2, x + size/2, y + (size+topCurveHeight)/2, x + size/2, y + topCurveHeight); ctx.bezierCurveTo(x + size/2, y, x, y, x, y + topCurveHeight); ctx.fill(); ctx.restore(); } function animate(){ ctx.clearRect(0,0,w,h); if(Math.random()<0.06) createHeart(); hearts.forEach((heart,i)=>{ heart.y -= heart.speed; if(heart.y < -40) hearts.splice(i,1); drawHeart(heart.x, heart.y, heart.size, heart.opacity); }); requestAnimationFrame(animate); } animate(); })();
+</script>
+</body>
+</html>
